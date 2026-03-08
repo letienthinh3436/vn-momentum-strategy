@@ -1,88 +1,100 @@
-# Momentum Strategy in the Vietnam Equity Market
+# Vietnam Equity Momentum Strategy
 
 ## Overview
 
-This project implements a **cross-sectional momentum strategy** on Vietnamese equities.
-Momentum is a well-documented market anomaly where stocks with strong past returns tend to continue outperforming in the near future.
+This project implements a **cross-sectional momentum strategy** on the Vietnamese equity market.
 
-The goal of this research is to evaluate whether the **momentum effect exists in the Vietnam stock market** and whether a systematic strategy can outperform the market benchmark.
+Momentum is a widely documented anomaly in quantitative finance where assets that performed well in the past tend to continue outperforming in the near future.
 
----
+The objective of this research is to:
 
-## Strategy Design
-
-The strategy follows a standard cross-sectional momentum framework:
-
-1. **Universe Selection**
-
-   * Filter stocks by liquidity using **average dollar volume**
-   * Select the **Top 200 most liquid stocks**
-
-2. **Momentum Signal**
-
-   * Compute momentum as **past N-month return**
-   * Momentum window tested from **3 to 12 months**
-
-3. **Portfolio Construction**
-
-   * Rank stocks by momentum
-   * Select the **Top 10% performers**
-   * Equal-weight portfolio
-
-4. **Rebalancing**
-
-   * Portfolio rebalanced **monthly**
+* Investigate the presence of the **momentum effect in Vietnam equities**
+* Evaluate the performance of a systematic momentum strategy
+* Analyze robustness through parameter sensitivity and backtesting
 
 ---
 
-## Backtesting Framework
+## Strategy Methodology
 
-The strategy is implemented using historical price and volume data.
+The strategy follows a typical **cross-sectional momentum framework** used in quantitative asset management.
 
-Key components of the backtest include:
+### 1. Universe Selection
 
-* Momentum signal generation
-* Liquidity filtering
-* Cross-sectional ranking
-* Portfolio construction
-* Out-of-sample validation
+Stocks are filtered by liquidity to ensure tradability.
 
-Parameter sensitivity analysis is conducted to evaluate the robustness of the strategy.
+* Liquidity proxy: **Average Dollar Volume**
+* Universe: **Top liquid stocks in the market**
 
 ---
 
-## Parameter Sensitivity
+### 2. Momentum Signal
 
-We evaluate the performance of the strategy across different parameters:
+Momentum is computed as the past **N-month cumulative return**:
 
-* Momentum window: **3 – 12 months**
-* Portfolio size: **Top 5% – 20%**
+Momentum = P(t) / P(t−N) − 1
 
-Two evaluation periods are used:
+where:
 
-**In-Sample (IS)**
-Used for parameter exploration.
+* P(t) is the current price
+* N is the lookback window
 
-**Out-of-Sample (OOS)**
-Used to validate the robustness of the strategy.
-
-Example visualization:
-
-![IS Heatmap](figures/heatmap_IS.png)
-
-![OOS Heatmap](figures/heatmap_OOS.png)
+Momentum windows between **3 and 12 months** are explored.
 
 ---
 
-## Results
+### 3. Portfolio Construction
 
-The results indicate that momentum strategies demonstrate **persistent performance across different parameter settings**.
+At each rebalance date:
 
-Key observations:
+1. Rank stocks by momentum
+2. Select the **top performers**
+3. Build an **equal-weighted portfolio**
 
-* Momentum effect appears to exist in the Vietnamese equity market.
-* Performance remains relatively stable across parameter variations.
-* The strategy shows robustness in both IS and OOS periods.
+---
+
+### 4. Rebalancing
+
+The portfolio is **rebalanced monthly**.
+
+At each rebalance:
+
+* signals are recalculated
+* stocks are re-ranked
+* portfolio weights are updated
+
+---
+
+## Backtest Results
+
+### Strategy Equity Curve
+
+![Equity Curve](figures/Equity_Curve_raw.png)
+
+After additional filtering and adjustments:
+
+![Adjusted Equity Curve](figures/Equity_Curve_alter.png)
+
+---
+
+### Strategy vs Market Benchmark
+
+Comparison with the VNINDEX benchmark:
+
+![Strategy vs VNINDEX](figures/Vs_VNIDEX.png)
+
+---
+
+### Drawdown Analysis
+
+![Drawdown](figures/Drawdown_alter.png)
+
+---
+
+### Parameter Sensitivity
+
+Performance across different momentum windows and portfolio selections:
+
+![Heatmap](figures/HeatMap.png)
 
 ---
 
@@ -91,32 +103,58 @@ Key observations:
 ```
 vn-momentum-strategy
 │
+├── data
+│   ├── VNINDEX.parquet
+│   ├── price.parquet
+│   └── volume.parquet
+│
+├── figures
+│   ├── Drawdown_alter.png
+│   ├── Equity_Curve_alter.png
+│   ├── Equity_Curve_raw.png
+│   ├── HeatMap.png
+│   └── Vs_VNINDEX.png
+│
 ├── notebooks
 │   └── momentum_backtest.ipynb
 │
 ├── src
 │   └── strategy.py
-│
-├── figures
-│   ├── heatmap_IS.png
-│   └── heatmap_OOS.png
+
+├── .gitignore
 │
 └── README.md
 ```
 
 ---
 
-## Future Work
+## Implementation
 
-Several extensions can improve the research:
+The main research workflow is implemented in:
 
-* Transaction cost modeling
-* Turnover analysis
-* Weekly rebalancing strategies
-* Alternative factor combinations
-* Risk exposure analysis
+```
+notebooks/momentum_backtest.ipynb
+```
 
-These extensions will be explored in a separate research notebook.
+The notebook contains:
+
+* data preprocessing
+* momentum signal construction
+* portfolio formation
+* performance evaluation
+* visualization
+
+---
+
+## Future Improvements
+
+Possible extensions for further research:
+
+* transaction cost modeling
+* turnover analysis
+* weekly rebalancing strategies
+* risk factor exposure analysis
+* multi-factor models (momentum + value + size)
 
 ---
 
