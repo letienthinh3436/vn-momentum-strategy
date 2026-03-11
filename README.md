@@ -80,7 +80,7 @@ After additional filtering and adjustments:
 
 Comparison with the VNINDEX benchmark:
 
-![Strategy vs VNINDEX](figures/Vs_VNIDEX.png)
+![Strategy vs VNINDEX](figures/Vs_VNINDEX.png)
 
 ---
 
