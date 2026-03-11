@@ -161,3 +161,11 @@ Possible extensions for further research:
 ## Disclaimer
 
 This project is for **research and educational purposes only** and does not constitute investment advice.
+
+
+---
+
+
+Have a nice day guys!
+
+<img width="1477" height="1327" alt="image" src="https://github.com/user-attachments/assets/74ad0b82-3cd5-43db-84fc-7558f72f2757" />
